@@ -10,8 +10,8 @@
         :root {
             --bg-dark: #0a0a0c;
             --card-bg: rgba(22, 22, 26, 0.7);
-            --accent-primary: #00f2ff; /* Ciano/Azul */
-            --accent-secondary: #10b981; /* Verde/Mint */
+            --accent-primary: #00f2ff;
+            --accent-secondary: #10b981;
             --text-main: #ffffff;
             --text-dim: #a1a1aa;
             --glass-border: rgba(255, 255, 255, 0.1);
@@ -22,6 +22,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Space Grotesk', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -101,70 +102,8 @@
         .btn-primary { background: var(--accent-primary); color: #000; }
         .btn-primary:hover { box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
         .btn-secondary { border: 1px solid var(--glass-border); color: #fff; }
-        .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 
-        /* About Section */
-        .section-container { padding: 4rem 10%; }
-        .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; }
-        
-        .photo-card {
-            aspect-ratio: 1;
-            background: var(--card-bg);
-            border-radius: 24px;
-            border: 1px solid var(--glass-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .photo-card::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 24px;
-            background: linear-gradient(45deg, var(--accent-primary), transparent);
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-        .stat-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-        .stat-card h3 { font-size: 1.5rem; color: var(--accent-primary); }
-        .stat-card p { font-size: 0.8rem; color: var(--text-dim); }
-
-        /* Skills */
-        .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .skill-group {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-        }
-        .skill-group h4 { margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .skill-group ul { list-style: none; color: var(--text-dim); font-size: 0.9rem; }
-        .skill-group ul li::before { content: "▹ "; color: var(--accent-secondary); }
-
-        /* Projects */
-        .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            overflow: hidden;
-            transition: 0.3s;
-        }
-        .project-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
-        .project-img { height: 180px; background: #1a1a20; }
-        .project-info { padding: 1.5rem; }
-        .project-tags { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
-        .tag { font-size: 0.6rem; color: var(--accent-primary); border: 1px solid var(--accent-primary); padding: 2px 8px; border-radius: 4px; }
-
-        /* Terminal Section */
+        /* Terminal Fixes */
         .terminal {
             background: #0d0d11;
             border-radius: 12px;
@@ -172,34 +111,48 @@
             padding: 1.5rem;
             font-family: 'Courier New', monospace;
             margin: 4rem 0;
+            min-height: 240px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .terminal-header { display: flex; gap: 6px; margin-bottom: 1rem; }
         .dot { width: 10px; height: 10px; border-radius: 50%; }
         .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
-        .code { font-size: 0.9rem; color: #10b981; }
-        .code span { color: #60a5fa; }
-
-        /* Contact Form */
-        .contact-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-        input, textarea {
-            width: 100%;
-            background: #16161a;
-            border: 1px solid var(--glass-border);
-            padding: 1rem;
-            border-radius: 8px;
-            color: #fff;
-            margin-bottom: 1rem;
+        
+        .code-line { margin-bottom: 8px; font-size: 0.9rem; min-height: 1.2em; }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background-color: var(--accent-secondary);
+            margin-left: 4px;
+            vertical-align: middle;
         }
+        .blink { animation: blink-anim 1s step-end infinite; }
+        @keyframes blink-anim {
+            50% { opacity: 0; }
+        }
+
+        /* Skills & Projects Grid */
+        .section-container { padding: 4rem 10%; }
+        .skills-grid, .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .skill-group, .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: 0.3s;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
+        
+        /* Contact Form */
+        .contact-flex { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; }
+        input, textarea { width: 100%; background: #16161a; border: 1px solid var(--glass-border); padding: 1rem; border-radius: 8px; color: #fff; margin-bottom: 1rem; }
         .btn-submit { width: 100%; background: var(--accent-primary); border: none; padding: 1rem; border-radius: 8px; font-weight: 700; cursor: pointer; }
 
-        /* Responsive */
         @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
             nav { padding: 1rem 5%; }
             .nav-links { display: none; }
-            h1 { font-size: 2.5rem; }
-            .about-grid, .skills-grid, .projects-grid, .contact-flex { grid-template-columns: 1fr; }
-            .section-container { padding: 3rem 5%; }
         }
     </style>
 </head>
@@ -221,114 +174,53 @@
 
     <header>
         <span class="badge">Disponível para novos projetos</span>
-        <h1>Oi, eu sou Lucas — <span>Fullstack Developer</span> & Entusiasta de Sistemas.</h1>
-        <p class="hero-sub">Desenvolvedor focado em construir sistemas escaláveis e interfaces modernas. Do hardware ao software, focado em performance e impacto social.</p>
+        <h1>Oi, eu sou Lucas — <span>Fullstack Developer</span></h1>
+        <p class="hero-sub">Desenvolvedor focado em sistemas modernos, performance e impacto social.</p>
         <div class="btn-group">
-            <a href="#projects" class="btn btn-primary">Explorar Projetos</a>
-            <a href="#" class="btn btn-secondary">Baixar Currículo</a>
+            <a href="#projects" class="btn btn-primary">Ver Projetos</a>
+            <a href="#contact" class="btn btn-secondary">Contato</a>
         </div>
     </header>
 
-    <section id="about" class="section-container">
-        <div class="about-grid">
-            <div class="photo-card">
-                <i data-lucide="user" size="64" color="#a1a1aa"></i>
-            </div>
-            <div>
-                <span style="color: var(--accent-primary); font-size: 0.8rem;">SOBRE MIM</span>
-                <h2>Do Hardware ao Full-Stack</h2>
-                <p style="color: var(--text-dim); margin-top: 1rem;">Minha jornada começou com a manutenção de hardware, entendendo como os sistemas funcionam por baixo do capô. Hoje, aplico esse conhecimento no desenvolvimento de aplicações robustas com Java, PHP e Flutter.</p>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>3+</h3>
-                        <p>Anos de Estudo</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>15+</h3>
-                        <p>Projetos Construídos</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="section-container">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Especialidade Técnica</h2>
-        <div class="skills-grid">
-            <div class="skill-group">
-                <h4><i data-lucide="server"></i> Backend</h4>
-                <ul>
-                    <li>Java (Spring Boot)</li>
-                    <li>PHP (Laravel)</li>
-                    <li>MySQL / PostgreSQL</li>
-                    <li>Node.js</li>
-                </ul>
-            </div>
-            <div class="skill-group">
-                <h4><i data-lucide="layout"></i> Frontend / Mobile</h4>
-                <ul>
-                    <li>Flutter (Dart)</li>
-                    <li>React / Next.js</li>
-                    <li>Tailwind CSS</li>
-                    <li>JavaScript (ES6+)</li>
-                </ul>
-            </div>
-            <div class="skill-group">
-                <h4><i data-lucide="terminal"></i> Infra & Outros</h4>
-                <ul>
-                    <li>Linux (Mint/Ubuntu)</li>
-                    <li>Git & CI/CD</li>
-                    <li>Docker</li>
-                    <li>C / C++</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
     <section class="section-container">
-        <div class="terminal">
+        <div class="terminal" id="terminal-trigger">
             <div class="terminal-header">
                 <div class="dot red"></div>
                 <div class="dot yellow"></div>
                 <div class="dot green"></div>
             </div>
-            <div class="code">
-                <p><span>></span> lucas.status()</p>
-                <p style="color: #fff"> { "local": "São Paulo, BR", "foco": "Sistemas de Alto Desempenho", "idiomas": ["PT-BR", "EN"] }</p>
-                <p><span>></span> lucas.contato()</p>
-                <p style="color: #fff"> "Abrindo formulário de conexão..."</p>
-                <p><span>></span> <span style="animation: blink 1s infinite">_</span></p>
+            <div id="terminal-content"></div>
+        </div>
+    </section>
+
+    <section id="skills" class="section-container">
+        <h2 style="text-align: center;">Habilidades</h2>
+        <div class="skills-grid">
+            <div class="skill-group">
+                <h4>Backend</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Java, PHP, MySQL, Node.js</p>
+            </div>
+            <div class="skill-group">
+                <h4>Frontend / Mobile</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Flutter, React, HTML/CSS, JS</p>
+            </div>
+            <div class="skill-group">
+                <h4>Sistemas</h4>
+                <p style="color: var(--text-dim); font-size: 0.9rem;">Linux Mint, Docker, Git, C++</p>
             </div>
         </div>
     </section>
 
     <section id="projects" class="section-container">
-        <h2 style="margin-bottom: 2rem;">Projetos em Destaque</h2>
+        <h2>Projetos em Destaque</h2>
         <div class="projects-grid">
             <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
-                    <h3>Campos Justos</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-dim);">Plataforma de impacto social para redução de desperdício de alimentos.</p>
-                </div>
+                <h3>Campos Justos</h3>
+                <p style="color: var(--text-dim);">Redução de desperdício de alimentos.</p>
             </div>
             <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">Flutter</span><span class="tag">Dart</span></div>
-                    <h3>Study Roadmap</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-dim);">App gamificado com sistema de XP para trilhas de aprendizado.</p>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-img"></div>
-                <div class="project-info">
-                    <div class="project-tags"><span class="tag">Java</span><span class="tag">Spring</span></div>
-                    <h3>SaaS Link Management</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-dim);">Sistema de gerenciamento de links para marketing digital.</p>
-                </div>
+                <h3>Study Roadmap</h3>
+                <p style="color: var(--text-dim);">Gamificação de estudos com XP.</p>
             </div>
         </div>
     </section>
@@ -336,33 +228,67 @@
     <section id="contact" class="section-container">
         <div class="contact-flex">
             <div>
-                <h2>Vamos nos conectar?</h2>
-                <p style="color: var(--text-dim); margin: 1rem 0;">Estou sempre aberto a conversar sobre tecnologia, hardware ou novas oportunidades de desenvolvimento.</p>
-                <div style="margin-top: 2rem;">
-                    <p><i data-lucide="mail"></i> lucas@exemplo.com</p>
-                    <p><i data-lucide="map-pin"></i> Itapetininga, SP - Brasil</p>
-                </div>
+                <h2>Vamos conversar?</h2>
+                <p>Mande uma mensagem para discutirmos seu próximo projeto.</p>
             </div>
             <form>
-                <input type="text" placeholder="Seu Nome">
-                <input type="email" placeholder="Seu E-mail">
-                <textarea rows="4" placeholder="Sua Mensagem"></textarea>
-                <button type="submit" class="btn-submit">Enviar Mensagem</button>
+                <input type="text" placeholder="Nome">
+                <input type="email" placeholder="E-mail">
+                <textarea rows="4" placeholder="Mensagem"></textarea>
+                <button type="submit" class="btn-submit">Enviar</button>
             </form>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 4rem; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.8rem;">
-        <p>© 2026 Lucas Portfólio. Desenvolvido com precisão e espírito Dual-Boot.</p>
-        <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
-            <i data-lucide="github"></i>
-            <i data-lucide="linkedin"></i>
-            <i data-lucide="youtube"></i>
-        </div>
-    </footer>
-
     <script>
         lucide.createIcons();
+
+        const terminalContent = document.getElementById('terminal-content');
+        const terminalTrigger = document.getElementById('terminal-trigger');
+        
+        const lines = [
+            { text: "> lucas.status()", color: "#10b981" },
+            { text: '{ "local": "São Paulo, BR", "foco": "Fullstack", "idiomas": ["PT-BR", "EN"] }', color: "#fff" },
+            { text: "> lucas.contato()", color: "#10b981" },
+            { text: '"Abrindo formulário de conexão..."', color: "#fff" }
+        ];
+
+        let typingActive = false;
+
+        async function playTerminal() {
+            if (typingActive) return;
+            typingActive = true;
+            terminalContent.innerHTML = '';
+
+            for (let line of lines) {
+                const lineElem = document.createElement('div');
+                lineElem.className = 'code-line';
+                lineElem.style.color = line.color;
+                terminalContent.appendChild(lineElem);
+
+                for (let i = 0; i < line.text.length; i++) {
+                    lineElem.innerHTML = line.text.substring(0, i + 1) + '<span class="cursor"></span>';
+                    await new Promise(r => setTimeout(r, 40));
+                }
+                lineElem.innerHTML = line.text; // Remove cursor da linha completa
+            }
+
+            // Cursor final piscando
+            const lastLine = document.createElement('div');
+            lastLine.innerHTML = '> <span class="cursor blink"></span>';
+            terminalContent.appendChild(lastLine);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                playTerminal();
+            } else {
+                typingActive = false;
+                terminalContent.innerHTML = ''; // Limpa ao sair da vista
+            }
+        }, { threshold: 0.6 });
+
+        observer.observe(terminalTrigger);
     </script>
 </body>
 </html>
